@@ -1,5 +1,12 @@
 
 
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (add-to-list 'load-path "~/.emacs.d/color-theme/")
 ;;;; CC-mode配置  http://cc-mode.sourceforge.net/
 (require 'cc-mode)
@@ -52,8 +59,15 @@
    [default default default italic underline success warning error])
  '(column-number-mode t)
  '(custom-enabled-themes (quote (wombat)))
- '(ecb-options-version "2.40")
+ '(ecb-layout-window-sizes
+   (quote
+    (("left8"
+      (ecb-directories-buffer-name 0.1368421052631579 . 0.24528301886792453)
+      (ecb-sources-buffer-name 0.1368421052631579 . 0.22641509433962265)
+      (ecb-methods-buffer-name 0.1368421052631579 . 0.2641509433962264)
+      (ecb-history-buffer-name 0.1368421052631579 . 0.1320754716981132)))))
  '(menu-bar-mode nil)
+ '(package-selected-packages (quote (ecb racket-mode)))
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
  '(tool-bar-mode nil))
@@ -68,12 +82,23 @@
 
 
 (require 'ecb)
-(require 'ecb-autoloads)
+;;(require 'ecb-autoloads)
 
 (when (require 'ecb nil 'noerror)
+  (setq ecb-version-check nil)
   (setq ecb-tip-of-the-day nil)
   (setq ecb-auto-compatibility-check nil)
   (setq ecb-primary-secondary-mouse-buttons 'mouse-1--C-mouse-1))
+
+(global-set-key (kbd "C-c e") 'ecb-goto-window-edit-last)
+(global-set-key (kbd "C-c s") 'ecb-goto-window-sources)
+(global-set-key (kbd "C-c d") 'ecb-goto-window-directories)
+(global-set-key (kbd "C-c m") 'ecb-goto-window-methods)
+(global-set-key (kbd "C-c h") 'ecb-goto-window-history)
+(global-set-key (kbd "C-c r") 'ecb-redraw-layout)
+(global-set-key (kbd "C-.") 'cscope-find-global-definition-no-prompting)
+(global-set-key (kbd "C-,") 'cscope-pop-mark)
+
 
 ;; copy region or whole line
 (global-set-key "\M-w"
